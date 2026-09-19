@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="2">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operador - Mesa de Som Virtual (Sem JS)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>🎛️ Mesa de Som - Operador</h1>
+    <p>Acompanhe os canais e atenda as solicitações em tempo real (Atualização automática via HTML Meta Refresh)</p>
+  </header>
+
+  <div class="container">
+    <!-- PAINEL DE CANAIS / INSTRUMENTOS -->
+    <div class="card">
+      <div class="card-title">
+        <span>Canais Cadastrados (Volume Atual)</span>
+        <a href="/" style="color: var(--accent-color); font-size: 0.85rem; text-decoration: none;">← Ver Tela do Músico</a>
+      </div>
+
+      <div class="channels-grid">
+        {{CHANNELS_GRID}}
+      </div>
+    </div>
+
+    <!-- PAINEL DE SOLICITAÇÕES PENDENTES -->
+    <div class="card">
+      <div class="card-title">
+        <span>Solicitações dos Músicos</span>
+        <span class="badge-pending">Auto-Refresh (2s)</span>
+      </div>
+
+      <div class="requests-list">
+        {{REQUESTS_LIST}}
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

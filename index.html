@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Música - Mesa de Som Virtual (Sem JS)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>🎸 Painel do Músico</h1>
+    <p>Selecione seu instrumento e envie solicitações via formulário HTML direto ao servidor Python</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-title">
+        <span>Seu Instrumento</span>
+        <a href="/operador" style="color: var(--accent-color); font-size: 0.85rem; text-decoration: none;">Ver Tela do Operador →</a>
+      </div>
+
+      <!-- Formulário para Escolha do Instrumento -->
+      <form action="/" method="GET" style="margin-bottom: 15px;">
+        <label for="id-select" style="color: var(--text-muted); display: block; margin-bottom: 5px; font-weight: 500;">
+          Selecione seu instrumento:
+        </label>
+        <div style="display: flex; gap: 10px;">
+          <select name="id" id="id-select" style="flex: 1; margin-bottom: 0;">
+            {{SELECT_OPTIONS}}
+          </select>
+          <button type="submit" class="btn btn-minus" style="padding: 8px 16px; font-size: 0.9rem;">Ver</button>
+        </div>
+      </form>
+
+      <!-- Display de Volume Atual -->
+      <div class="volume-display">{{VOLUME_ATUAL}}%</div>
+
+      <!-- Retorno Auxiliar (Knob de Girar modelo AUX) -->
+      <div class="knob-container">
+        <div class="knob-label">AUX RETORNO</div>
+        <div class="knob-dial-wrapper">
+          <div class="knob-numbers">
+            <span class="knob-number knob-num-0">0</span>
+            <span class="knob-number knob-num-3">3</span>
+            <span class="knob-number knob-num-5">5</span>
+            <span class="knob-number knob-num-7">7</span>
+            <span class="knob-number knob-num-10">10</span>
+          </div>
+          <div class="knob-body" style="transform: rotate({{ANGULO_KNOB}}deg);">
+            <div class="knob-pointer"></div>
+          </div>
+        </div>
+        <form action="/auxiliar" method="POST" style="width: 100%;">
+          <input type="hidden" name="instrumento_id" value="{{INST_ID}}">
+          <input type="range" class="knob-range-input" name="volume_auxiliar" min="0" max="100" value="{{VOLUME_AUXILIAR}}">
+          <div class="knob-value-text">Aux: {{VOLUME_AUXILIAR}}%</div>
+          <button type="submit" class="btn btn-minus" style="width: 100%; margin-top: 8px; font-size: 0.85rem; padding: 6px;">
+            Salvar Auxiliar
+          </button>
+        </form>
+      </div>
+
+      <!-- Dimmer (Formulário de Solicitação de Novo Volume) -->
+      <form action="/solicitar" method="POST" class="dimmer-container">
+        <input type="hidden" name="instrumento_id" value="{{INST_ID}}">
+        <label for="dimmer-volume" style="color: var(--text-muted); display: block; margin-bottom: 10px; font-weight: 500;">
+          Deslize o Dimmer para escolher o novo volume desejado:
+        </label>
+        <div class="dimmer-wrapper">
+          <input type="range" id="dimmer-volume" name="volume_solicitado" min="0" max="100" step="5" value="{{VOLUME_ATUAL}}">
+        </div>
+        <button type="submit" class="btn btn-plus" style="width: 100%; margin-top: 15px;">
+          Enviar Solicitação ao Operador
+        </button>
+      </form>
+
+      <!-- Status da Solicitação -->
+      <div class="status-box">
+        {{STATUS_MSG}}
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
